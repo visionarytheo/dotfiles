@@ -3,10 +3,13 @@
 -- Core Neovim settings, leaders, options, basic keymaps, basic autocmds
 -- ============================================================
 do
--- Enable faster startup by caching compiled Lua modules
+  -- Enable faster startup by caching compiled Lua modules
   vim.loader.enable()
-  vim.opt.fillchars:append({ eob = " " })
+  vim.opt.fillchars:append { eob = ' ' }
 
+  vim.opt.foldmethod = 'expr'
+  vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+  vim.opt.foldlevel = 99
 
   -- Set <space> as the leader key
   -- See `:help mapleader`
@@ -15,7 +18,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = true
+  --  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -305,18 +308,11 @@ do
       comments = { italic = false }, -- Disable italics in comments
     },
   }
--- Gruvbox
-  vim.pack.add({
-  "https://github.com/ellisonleao/gruvbox.nvim"
-})
-
-require("gruvbox").setup()
-vim.cmd.colorscheme("gruvbox")
 
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  --vim.cmd.colorscheme 'tokyonight-night'
+  vim.cmd.colorscheme 'tokyonight-night'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -623,6 +619,7 @@ do
     vtsls = {},
     eslint_d = {},
     jdtls = {},
+    ['google-java-format'] = {},
     ['vscode-spring-boot-tools'] = {},
     ['postgres-language-server'] = {},
     ['sql-formatter'] = {},
@@ -727,6 +724,7 @@ do
       local enabled_filetypes = {
         -- lua = true,
         -- python = true,
+        java = true,
         javascript = true,
         javascriptreact = true,
         typescript = true,
@@ -736,7 +734,6 @@ do
         json = true,
         jsonc = true,
         html = true,
-
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -755,6 +752,7 @@ do
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      java = {'google-java-format'},
       sql = { 'postgres-language-server' },
 
       -- JavaScript & TypeScript (Uses Biome first, falls back to prettierd)
