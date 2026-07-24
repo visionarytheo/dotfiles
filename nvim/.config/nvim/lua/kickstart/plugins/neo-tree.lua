@@ -15,6 +15,9 @@ require('neo-tree').setup {
       mappings = {
         ['\\'] = 'close_window',
       },
+          position = "right",
+    width = 30, -- Adjust sidebar width here
+
     },
   },
 }
