@@ -21,7 +21,9 @@ alias spring-dev='./mvnw spring-boot:run -Dspring-boot.run.profiles=dev'
 # 5. Prompt Engine (Must stay near the end)
 eval "$(starship init zsh)"
 
-# 6. SDKMAN (THIS MUST ABSOLUTELY BE AT THE VERY END OF THE FILE!!!)
+# 6. System Fetch Tool
+fastfetch
+
+# 7. SDKMAN (THIS MUST ABSOLUTELY BE AT THE VERY END OF THE FILE!!!)
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
