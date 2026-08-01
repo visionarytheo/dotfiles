@@ -40,6 +40,7 @@ PACKAGES=(
     "tmux"
     "ghostty"
     "nvim"
+    "fastfetch"
 )
 
 echo -e "\n${GREEN}🔗 Symlinking packages with GNU Stow...${NC}"
