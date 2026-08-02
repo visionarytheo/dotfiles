@@ -7,6 +7,7 @@ set -e
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
+RED='\033[0;31m'
 CLEAR='\033[0m'
 
 echo -e "${BLUE}==================================================================${CLEAR}"
@@ -16,15 +17,42 @@ echo -e "${BLUE}================================================================
 # ------------------------------------------------------------------------------
 # 1. Update Core System
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 1/4] Updating system database packages...${CLEAR}"
+echo -e "\n${YELLOW}[Step 1/6] Updating system database packages...${CLEAR}"
 sudo pacman -Syu --noconfirm
 
 # ------------------------------------------------------------------------------
-# 2. Install Native Repository Packages via Pacman
+# 2. Install GNU Stow First
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 2/4] Installing core native Arch packages...${CLEAR}"
+echo -e "\n${YELLOW}[Step 2/6] Installing GNU Stow...${CLEAR}"
+sudo pacman -S --noconfirm stow
+
+# ------------------------------------------------------------------------------
+# 3. Clean Up Existing Shell Configs & Deploy Dotfiles
+# ------------------------------------------------------------------------------
+echo -e "\n${YELLOW}[Step 3/6] Cleaning and linking configuration packages via setup.sh...${CLEAR}"
+
+# Safely delete any existing local .zshrc file or broken symlink to avoid Stow conflicts
+if [ -f "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ]; then
+    echo "Removing existing ~/.zshrc file to prevent Stow conflicts..."
+    rm -f "$HOME/.zshrc"
+fi
+
+if [ -f "./setup.sh" ]; then
+    chmod +x setup.sh
+    ./setup.sh
+else
+    echo -e "${RED}❌ Critical Error: setup.sh not found. Cannot proceed safely without config layout.${CLEAR}"
+    exit 1
+fi
+
+# ------------------------------------------------------------------------------
+# 4. Install the Rest of the Core Native Arch Packages
+# ------------------------------------------------------------------------------
+echo -e "\n${YELLOW}[Step 4/6] Installing remaining native Arch packages...${CLEAR}"
 
 PACKAGES=(
+    curl
+    zsh
     zip
     unzip
     fzf
@@ -36,16 +64,27 @@ PACKAGES=(
     tmux
     docker
     go
-    gh
-    stow
+    github-cli
 )
 
 sudo pacman -S --noconfirm "${PACKAGES[@]}"
 
 # ------------------------------------------------------------------------------
-# 3. Provision Third-Party Scripts (Checking local home folders directly)
+# 5. Provision Third-Party Scripts & Daemons
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 3/4] Deploying toolchain environments...${CLEAR}"
+echo -e "\n${YELLOW}[Step 5/6] Deploying toolchain environments & daemons...${CLEAR}"
+
+# Install Oh My Zsh if missing from home directory
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh framework..."
+    RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    
+    echo "Restoring your custom tracked ~/.zshrc file..."
+    rm -f "$HOME/.zshrc"
+    ./setup.sh
+else
+    echo "Oh My Zsh is already configured in home, skipping."
+fi
 
 # Install Node Version Manager (NVM) if missing from home directory
 if [ ! -d "$HOME/.nvm" ]; then
@@ -59,7 +98,7 @@ fi
 if [ ! -d "$HOME/.sdkman" ]; then
     echo "Installing SDKMAN! manager..."
     export sdkman_auto_answer=true
-    curl -s "https://get.sdkman.io" | bash
+    curl -s "https://get.sdkman.io" | zsh
 else
     echo "SDKMAN is already configured in home, skipping."
 fi
@@ -72,11 +111,6 @@ else
     echo "Starship already installed, skipping."
 fi
 
-# ------------------------------------------------------------------------------
-# 4. System Daemon Configuration & Stow Linking
-# ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 4/4] Aligning running background daemons and symlinks...${CLEAR}"
-
 # Enable Docker daemon sockets natively
 if command -v docker &> /dev/null; then
     sudo systemctl enable --now docker.service
@@ -86,10 +120,19 @@ if command -v docker &> /dev/null; then
     fi
 fi
 
-# Force Stow to deploy all configurations cleanly to home paths
-stow --adopt *
+# ------------------------------------------------------------------------------
+# 6. Set Default System Shell to Zsh
+# ------------------------------------------------------------------------------
+echo -e "\n${YELLOW}[Step 6/6] Verifying user default login shell...${CLEAR}"
+if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "Changing default shell to Zsh..."
+    chsh -s "$(which zsh)"
+else
+    echo "Zsh is already your default system shell."
+fi
 
 echo -e "\n${GREEN}==================================================================${CLEAR}"
 echo -e "${GREEN}  Provisioning complete! Your single ~/.zshrc file handles the rest!${CLEAR}"
 echo -e "${GREEN}  Run: source ~/.zshrc                                            ${CLEAR}"
 echo -e "${GREEN}==================================================================${CLEAR}"
+
