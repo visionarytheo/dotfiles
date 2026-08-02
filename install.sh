@@ -58,6 +58,7 @@ PACKAGES=(
     fzf
     zoxide
     eza
+    bat
     neovim
     ghostty
     fastfetch
