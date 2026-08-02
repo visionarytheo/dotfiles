@@ -29,6 +29,7 @@ if ! command -v stow &> /dev/null; then
 fi
 
 # 2. Navigate to the dotfiles directory location
+# FIXED: Index changed from [1] to [0] to resolve directory context correctly
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DOTFILES_DIR"
 echo -e "📍 Working inside dotfiles directory: ${YELLOW}$DOTFILES_DIR${NC}"
