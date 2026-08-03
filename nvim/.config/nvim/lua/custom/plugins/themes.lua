@@ -17,4 +17,4 @@ require('gruvbox').setup {
 }
 
 -- 3. Set the global colorscheme
-vim.cmd.colorscheme 'nordic'
+vim.cmd.colorscheme 'tokyonight-storm'

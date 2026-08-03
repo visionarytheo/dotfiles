@@ -66,6 +66,7 @@ PACKAGES=(
     docker
     go
     github-cli
+    tree-sitter-cli
 )
 
 sudo pacman -S --noconfirm "${PACKAGES[@]}"
