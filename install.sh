@@ -24,7 +24,7 @@ sudo pacman -Syu --noconfirm
 # 2. Install GNU Stow First
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}[Step 2/6] Installing GNU Stow...${CLEAR}"
-sudo pacman -S --noconfirm stow
+sudo pacman -S --needed --noconfirm stow
 
 # ------------------------------------------------------------------------------
 # 3. Clean Up Existing Shell Configs & Deploy Dotfiles
@@ -32,10 +32,10 @@ sudo pacman -S --noconfirm stow
 echo -e "\n${YELLOW}[Step 3/6] Cleaning and linking configuration packages via setup.sh...${CLEAR}"
 
 # Safely delete any existing local .zshrc file or broken symlink to avoid Stow conflicts
-#if [ -f "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ]; then
-    #echo "Removing existing ~/.zshrc file to prevent Stow conflicts..."
-   # rm -f "$HOME/.zshrc"
-#fi
+if [ -f "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ]; then
+    echo "Removing existing ~/.zshrc file to prevent Stow conflicts..."
+    rm -f "$HOME/.zshrc"
+fi
 
 if [ -f "./setup.sh" ]; then
     chmod +x setup.sh
@@ -67,10 +67,10 @@ PACKAGES=(
     go
     github-cli
     tree-sitter-cli
-    zen-browser
+    zen-browser-bin
 )
 
-sudo pacman -S --noconfirm "${PACKAGES[@]}"
+sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
 
 # ------------------------------------------------------------------------------
 # 5. Provision Third-Party Scripts & Daemons
@@ -113,7 +113,7 @@ fi
 if [ ! -d "$HOME/.sdkman" ]; then
     echo "Installing SDKMAN! manager..."
     export sdkman_auto_answer=true
-    curl -s "https://get.sdkman.io" | zsh
+    curl -s "https://get.sdkman.io" | bash
 else
     echo "SDKMAN is already configured in home, skipping."
 fi
@@ -141,7 +141,7 @@ fi
 echo -e "\n${YELLOW}[Step 6/6] Verifying user default login shell...${CLEAR}"
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "Changing default shell to Zsh..."
-    chsh -s "$(which zsh)"
+    sudo chsh -s "$(which zsh)" "$USER"
 else
     echo "Zsh is already your default system shell."
 fi
