@@ -92,7 +92,7 @@ if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
 fi
 
 # Install Node Version Manager (NVM) if missing from home directory
-if [ ! -d "$HOME/.nvm" ]; then
+if [ ! -d "$HOME/.config/nvm" ]; then
     echo "Installing Node Version Manager (NVM)..."
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
 else
@@ -111,7 +111,7 @@ fi
 # Install Starship cross-shell prompt profile engine
 if ! command -v starship &> /dev/null; then
     echo "Installing Starship cross-shell prompt..."
-    curl -sS https://starship.rs | sh -s -- --yes
+    curl -sS https://starship.rs/install.sh | sh
 else
     echo "Starship already installed, skipping."
 fi
