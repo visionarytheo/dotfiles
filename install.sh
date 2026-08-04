@@ -131,7 +131,7 @@ fi
 echo -e "\n${YELLOW}[Step 6/6] Verifying user default login shell...${CLEAR}"
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "Changing default shell to Zsh..."
-    sudo chsh -s "$(which zsh)" "$USER"
+    chsh -s "$(which zsh)"
 else
     echo "Zsh is already your default system shell."
 fi
