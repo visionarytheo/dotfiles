@@ -32,10 +32,10 @@ sudo pacman -S --noconfirm stow
 echo -e "\n${YELLOW}[Step 3/6] Cleaning and linking configuration packages via setup.sh...${CLEAR}"
 
 # Safely delete any existing local .zshrc file or broken symlink to avoid Stow conflicts
-if [ -f "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ]; then
-    echo "Removing existing ~/.zshrc file to prevent Stow conflicts..."
-    rm -f "$HOME/.zshrc"
-fi
+#if [ -f "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ]; then
+    #echo "Removing existing ~/.zshrc file to prevent Stow conflicts..."
+   # rm -f "$HOME/.zshrc"
+#fi
 
 if [ -f "./setup.sh" ]; then
     chmod +x setup.sh
@@ -67,6 +67,7 @@ PACKAGES=(
     go
     github-cli
     tree-sitter-cli
+    zen-browser
 )
 
 sudo pacman -S --noconfirm "${PACKAGES[@]}"
