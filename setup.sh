@@ -21,7 +21,7 @@ if ! command -v stow &> /dev/null; then
     elif command -v apt-get &> /dev/null; then
         sudo apt-get update && sudo apt-get install -y stow
     elif command -v pacman &> /dev/null; then
-        sudo pacman -S --noconfirm stow
+        sudo pacman -S --needed --noconfirm stow
     else
         echo -e "${RED}❌ Could not detect package manager. Please install GNU Stow manually.${NC}"
         exit 1
