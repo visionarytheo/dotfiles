@@ -31,12 +31,6 @@ sudo pacman -S --needed --noconfirm stow
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}[Step 3/6] Cleaning and linking configuration packages via setup.sh...${CLEAR}"
 
-# Safely delete any existing local .zshrc file or broken symlink to avoid Stow conflicts
-if [ -f "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ]; then
-    echo "Removing existing ~/.zshrc file to prevent Stow conflicts..."
-    rm -f "$HOME/.zshrc"
-fi
-
 if [ -f "./setup.sh" ]; then
     chmod +x setup.sh
     ./setup.sh
@@ -81,10 +75,6 @@ echo -e "\n${YELLOW}[Step 5/6] Deploying toolchain environments & daemons...${CL
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     echo "Installing Oh My Zsh framework..."
     RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    
-    echo "Restoring your custom tracked ~/.zshrc file..."
-    rm -f "$HOME/.zshrc"
-    ./setup.sh
 else
     echo "Oh My Zsh is already configured in home, skipping."
 fi
