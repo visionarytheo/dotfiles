@@ -14,9 +14,20 @@ echo -e "${BLUE}================================================================
 echo -e "${GREEN}      Starting Automated Workspace Provisioning Core Script       ${CLEAR}"
 echo -e "${BLUE}==================================================================${CLEAR}"
 
+echo -e "\n${YELLOW}[Step 0/6] Installing chaotic aur via chaotic.sh...${CLEAR}"
+
+if [ -f "./chaotic.sh" ]; then
+    chmod +x chaotic.sh
+    ./chaotic.sh
+else
+    echo -e "${RED}❌ Critical Error: setup.sh not found. Cannot proceed safely without config layout.${CLEAR}"
+    exit 1
+fi
+
 # ------------------------------------------------------------------------------
 # 1. Update Core System
 # ------------------------------------------------------------------------------
+
 echo -e "\n${YELLOW}[Step 1/6] Updating system database packages...${CLEAR}"
 sudo pacman -Syu --noconfirm
 
@@ -111,13 +122,14 @@ fi
 # Install Starship cross-shell prompt profile engine
 if ! command -v starship &> /dev/null; then
     echo "Installing Starship cross-shell prompt..."
-    curl -sS https://starship.rs/install.sh | sh
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
 else
     echo "Starship already installed, skipping."
 fi
 
 # Enable Docker daemon sockets natively
 if command -v docker &> /dev/null; then
+    sudo systemctl enable --now docker.socket
     sudo systemctl enable --now docker.service
     if ! groups "$USER" | grep -q "\bdocker\b"; then
         sudo usermod -aG docker "$USER"
@@ -131,7 +143,7 @@ fi
 echo -e "\n${YELLOW}[Step 6/6] Verifying user default login shell...${CLEAR}"
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "Changing default shell to Zsh..."
-    chsh -s "$(which zsh)"
+    sudo chsh -s "$(which zsh)" "$USER"
 else
     echo "Zsh is already your default system shell."
 fi
