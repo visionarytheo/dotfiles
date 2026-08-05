@@ -104,6 +104,7 @@ PACKAGES=(
     tree-sitter-cli
     zen-browser-bin
     ttf-jetbrains-mono-nerd
+    wl-clipboard
 )
 
 sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
