@@ -124,9 +124,9 @@ if [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]; then
 fi
 
 # Install Node Version Manager (NVM) if missing from home directory
-if [ ! -d "$HOME/.config/nvm" ]; then
+if [ ! -d "$HOME/.nvm" ]; then
     echo "Installing Node Version Manager (NVM)..."
-    mkdir -p "$HOME/.config/nvm"
+    mkdir -p "$HOME/.nvm"
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
 else
     echo "NVM is already configured in home, skipping."
@@ -168,6 +168,10 @@ if [ "$SHELL" != "$(which zsh)" ]; then
 else
     echo "Zsh is already your default system shell."
 fi
+
+# Refresh user-space font registries immediately so Ghostty reads them without logout
+echo "Reindexing local font caches..."
+fc-cache -fv &> /dev/null
 
 echo -e "\n${GREEN}==================================================================${CLEAR}"
 echo -e "${GREEN}  Provisioning complete! Your single ~/.zshrc file handles the rest!${CLEAR}"
