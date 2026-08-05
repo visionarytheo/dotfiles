@@ -3,6 +3,10 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
+# Visual formatting configurations
+YELLOW='\033[1;33m'
+CLEAR='\033[0m'
+
 # ------------------------------------------------------------------------------
 # 1. Deploy NVIDIA Drivers & Explicit Early-Boot Modesetting Hook
 # ------------------------------------------------------------------------------
