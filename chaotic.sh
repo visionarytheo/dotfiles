@@ -8,12 +8,12 @@ if grep -q "\[chaotic-aur\]" /etc/pacman.conf; then
 fi
 
 echo "Receiving primary Chaotic-AUR key from keyserver..."
-sudo pacman-key --recv-key 3056513887B78AEB --keyserver ://ubuntu.com
+sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 sudo pacman-key --lsign-key 3056513887B78AEB
 
 echo "Downloading database mirror profiles..."
-sudo pacman -U --noconfirm 'https://chaotic.cx'
-sudo pacman -U --noconfirm 'https://chaotic.cx'
+sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
 echo "Appending repository configurations to /etc/pacman.conf..."
 sudo bash -c 'cat << EOF >> /etc/pacman.conf

@@ -37,6 +37,7 @@ eval "$(zoxide init zsh)"
 # Core Terminal Overrides
 alias bat="bat"
 alias ls='eza --icons --color=always'
+alias c='clear'
 
 # Spring Boot Development Layouts
 alias spring-run='./mvnw spring-boot:run'

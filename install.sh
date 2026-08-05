@@ -14,6 +14,9 @@ echo -e "${BLUE}================================================================
 echo -e "${GREEN}      Starting Automated Workspace Provisioning Core Script       ${CLEAR}"
 echo -e "${BLUE}==================================================================${CLEAR}"
 
+git config --global user.email "visionarytheo@gmail.com"
+git config --global user.name "Theo"
+
 # ------------------------------------------------------------------------------
 # 0. Execute Chaotic-AUR Setup
 # ------------------------------------------------------------------------------
@@ -40,7 +43,7 @@ echo -e "\n${YELLOW}[Step 3/7] Running NVIDIA driver installation script...${CLE
 
 if [ -f "./nvidia-arch.sh" ]; then
     chmod +x nvidia-arch.sh
-    ./nvidia-arch.sh
+#    ./nvidia-arch.sh
 else
     echo -e "${RED}❌ Critical Error: nvidia-arch.sh not found.${CLEAR}"
     exit 1
@@ -50,7 +53,7 @@ fi
 # 3. Install GNU Stow First
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}[Step 4/7] Installing GNU Stow...${CLEAR}"
-sudo pacman -S --needed --noconfirm stow
+sudo pacman -S --needed --noconfirm stow zsh
 
 # ------------------------------------------------------------------------------
 # 4. Deploy Shell Frameworks (Pre-empting Stow Conflicts)
@@ -85,7 +88,6 @@ echo -e "\n${YELLOW}[Step 6/7] Installing remaining native Arch packages...${CLE
 
 PACKAGES=(
     curl
-    zsh
     zip
     unzip
     fzf
