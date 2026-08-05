@@ -8,6 +8,9 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 CLEAR='\033[0m'
 
+# Explicitly initialize state variable to prevent unbound reference errors
+NEEDS_REBUILD=false
+
 # ------------------------------------------------------------------------------
 # 1. Core Package Installation (Skipped automatically by pacman if present)
 # ------------------------------------------------------------------------------
