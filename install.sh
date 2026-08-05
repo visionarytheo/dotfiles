@@ -42,10 +42,10 @@ sudo pacman -Syu --noconfirm
 echo -e "\n${YELLOW}[Step 3/7] Running NVIDIA driver installation script...${CLEAR}"
 
 if [ -f "./nvidia-arch.sh" ]; then
-    chmod +x nvidia-arch.sh
-    ./nvidia-arch.sh
+    chmod +x nvidia2-arch.sh
+    ./nvidia2-arch.sh
 else
-    echo -e "${RED}❌ Critical Error: nvidia-arch.sh not found.${CLEAR}"
+    echo -e "${RED}❌ Critical Error: nvidia2-arch.sh not found.${CLEAR}"
     exit 1
 fi
 
