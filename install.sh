@@ -43,7 +43,7 @@ echo -e "\n${YELLOW}[Step 3/7] Running NVIDIA driver installation script...${CLE
 
 if [ -f "./nvidia-arch.sh" ]; then
     chmod +x nvidia-arch.sh
-#    ./nvidia-arch.sh
+    ./nvidia-arch.sh
 else
     echo -e "${RED}❌ Critical Error: nvidia-arch.sh not found.${CLEAR}"
     exit 1
@@ -170,10 +170,6 @@ if [ "$SHELL" != "$(which zsh)" ]; then
 else
     echo "Zsh is already your default system shell."
 fi
-
-# Refresh user-space font registries immediately so Ghostty reads them without logout
-echo "Reindexing local font caches..."
-fc-cache -fv &> /dev/null
 
 echo -e "\n${GREEN}==================================================================${CLEAR}"
 echo -e "${GREEN}  Provisioning complete! Your single ~/.zshrc file handles the rest!${CLEAR}"
