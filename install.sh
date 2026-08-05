@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Exit immediately if a command exits with a non-zero status
-set -e
+set -euo pipefail
 
 # Visual formatting configurations
 GREEN='\033[0;32m'
@@ -41,7 +41,7 @@ sudo pacman -Syu --noconfirm
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}[Step 3/7] Running NVIDIA driver installation script...${CLEAR}"
 
-if [ -f "./nvidia-arch.sh" ]; then
+if [ -f "./nvidia2-arch.sh" ]; then
     chmod +x nvidia2-arch.sh
     ./nvidia2-arch.sh
 else
@@ -163,7 +163,7 @@ fi
 # ------------------------------------------------------------------------------
 # 7. Deploy Steam via Standalone Script
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 3/7] Running NVIDIA driver installation script...${CLEAR}"
+echo -e "\n${YELLOW}[Step 3/7] Running STEAM installation script...${CLEAR}"
 
 if [ -f "./steam.sh" ]; then
     chmod +x steam.sh
