@@ -6,21 +6,64 @@ set -euo pipefail
 # Visual formatting configurations
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+RED='\033[0;31m'
 CLEAR='\033[0m'
 
 NEEDS_REBUILD=false
 
+echo -e "${YELLOW}==================================================================${CLEAR}"
+echo -e "${GREEN}       NVIDIA Wayland Driver & Environment Configuration         ${CLEAR}"
+echo -e "${YELLOW}==================================================================${CLEAR}"
+
 # ------------------------------------------------------------------------------
-# 1. Core Package Installation
+# 0. Ensure [multilib] Repository is Enabled
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[1/5] Installing NVIDIA drivers, DKMS, and Wayland utilities...${CLEAR}"
-# nvidia-dkms builds modules dynamically across all installed kernels (mainline, zen, lts)
-sudo pacman -S --needed --noconfirm \
-    nvidia-dkms \
-    nvidia-utils \
-    nvidia-settings \
-    egl-wayland \
-    lib32-nvidia-utils
+echo -e "\n${YELLOW}[0/5] Checking [multilib] repository status...${CLEAR}"
+
+if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
+    echo "Enabling [multilib] repository in /etc/pacman.conf..."
+    # Uncomment the [multilib] section header and its Include line
+    sudo sed -i '/^#\[multilib\]/{N;s/#\[multilib\]\n#Include = \/etc\/pacman.d\/mirrorlist/\[multilib\]\nInclude = \/etc\/pacman.d\/mirrorlist/}' /etc/pacman.conf
+    
+    # Fallback in case spacing/formatting prevented regex match
+    if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
+        echo -e "\n[multilib]\nInclude = /etc/pacman.d/mirrorlist" | sudo tee -a /etc/pacman.conf > /dev/null
+    fi
+    
+    echo "Synchronizing package databases..."
+    sudo pacman -Sy
+else
+    echo -e "${GREEN}✓ [multilib] repository is active.${CLEAR}"
+fi
+
+# ------------------------------------------------------------------------------
+# 1. Resolve Driver Branch & Install Packages
+# ------------------------------------------------------------------------------
+echo -e "\n${YELLOW}[1/5] Checking and installing NVIDIA package set...${CLEAR}"
+
+# Check if 580xx branch from Chaotic-AUR is present to prevent package conflicts
+if pacman -Qs nvidia-580xx-dkms &>/dev/null; then
+    echo "Detected Chaotic-AUR nvidia-580xx driver branch. Using 580xx packages..."
+    PKGS=(
+        nvidia-580xx-dkms
+        nvidia-580xx-utils
+        nvidia-580xx-settings
+        egl-wayland
+        lib32-nvidia-580xx-utils
+    )
+else
+    echo "Using standard Arch repository NVIDIA packages..."
+    PKGS=(
+        nvidia-dkms
+        nvidia-utils
+        nvidia-settings
+        egl-wayland
+        lib32-nvidia-utils
+    )
+fi
+
+# --needed ensures pacman safely skips already installed packages
+sudo pacman -S --needed --noconfirm "${PKGS[@]}"
 
 # ------------------------------------------------------------------------------
 # 2. Configure DRM Modesetting & Framebuffer
@@ -53,7 +96,7 @@ if [ -f "$MKINIT_FILE" ]; then
     if ! grep -q "nvidia_drm" "$MKINIT_FILE"; then
         echo "Injecting early KMS modules into $MKINIT_FILE..."
         
-        # Insert modules safely inside MODULES=(...)
+        # Safely insert modules inside MODULES=(...)
         sudo sed -i -E 's/MODULES=\((.*)\)/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm \1)/' "$MKINIT_FILE"
         sudo sed -i -E 's/MODULES=\(\s+/MODULES=(/' "$MKINIT_FILE"
         
@@ -69,7 +112,6 @@ fi
 echo -e "\n${YELLOW}[4/5] Setting system-wide Wayland environment variables...${CLEAR}"
 ENV_FILE="/etc/environment"
 
-# Array of key-value pairs needed for optimal NVIDIA Wayland performance
 declare -A WAYLAND_ENV_VARS=(
     ["LIBVA_DRIVER_NAME"]="nvidia"
     ["XDG_SESSION_TYPE"]="wayland"
@@ -84,20 +126,17 @@ for key in "${!WAYLAND_ENV_VARS[@]}"; do
     entry="${key}=${value}"
     
     if grep -q "^${key}=" "$ENV_FILE" 2>/dev/null; then
-        # Update existing variable if different
         sudo sed -i "s|^${key}=.*|${entry}|" "$ENV_FILE"
     else
-        # Append new variable
         echo "$entry" | sudo tee -a "$ENV_FILE" > /dev/null
     fi
 done
-echo -e "${GREEN}✓ Wayland environment variables appended to /etc/environment.${CLEAR}"
+echo -e "${GREEN}✓ Wayland environment variables applied to /etc/environment.${CLEAR}"
 
 # ------------------------------------------------------------------------------
 # 5. Enable Power Management Services & Rebuild Initramfs
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}[5/5] Enabling NVIDIA systemd power management services...${CLEAR}"
-# Essential for preventing visual corruption or black screens after system sleep/suspend
 sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
 
 if [ "$NEEDS_REBUILD" = true ]; then
