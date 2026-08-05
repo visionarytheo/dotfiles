@@ -161,7 +161,20 @@ if command -v docker &> /dev/null; then
 fi
 
 # ------------------------------------------------------------------------------
-# 7. Set Default System Shell to Zsh
+# 7. Deploy Steam via Standalone Script
+# ------------------------------------------------------------------------------
+echo -e "\n${YELLOW}[Step 3/7] Running NVIDIA driver installation script...${CLEAR}"
+
+if [ -f "./steam.sh" ]; then
+    chmod +x steam.sh
+    ./steam.sh
+else
+    echo -e "${RED}❌ Critical Error: steam.sh not found.${CLEAR}"
+    exit 1
+fi
+
+# ------------------------------------------------------------------------------
+# 8. Set Default System Shell to Zsh
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}Verifying user default login shell...${CLEAR}"
 if [ "$SHELL" != "$(which zsh)" ]; then
