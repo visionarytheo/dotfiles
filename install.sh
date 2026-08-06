@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Exit immediately if a command exits with a non-zero status
+# Exit immediately if a command exits with a non-zero status or unbound variable
 set -euo pipefail
 
 # Visual formatting configurations
@@ -11,7 +11,7 @@ RED='\033[0;31m'
 CLEAR='\033[0m'
 
 echo -e "${BLUE}==================================================================${CLEAR}"
-echo -e "${GREEN}      Starting Automated Workspace Provisioning Core Script       ${CLEAR}"
+echo -e "${GREEN}      Starting Automated Workspace Provisioning Core Script      ${CLEAR}"
 echo -e "${BLUE}==================================================================${CLEAR}"
 
 git config --global user.email "visionarytheo@gmail.com"
@@ -20,7 +20,7 @@ git config --global user.name "Theo"
 # ------------------------------------------------------------------------------
 # 0. Execute Chaotic-AUR Setup
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 1/7] Installing Chaotic-AUR via chaotic.sh...${CLEAR}"
+echo -e "\n${YELLOW}[Step 1/8] Installing Chaotic-AUR via chaotic.sh...${CLEAR}"
 
 if [ -f "./chaotic.sh" ]; then
     chmod +x chaotic.sh
@@ -33,32 +33,32 @@ fi
 # ------------------------------------------------------------------------------
 # 1. Update Core System
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 2/7] Updating system database packages...${CLEAR}"
+echo -e "\n${YELLOW}[Step 2/8] Updating system database packages...${CLEAR}"
 sudo pacman -Syu --noconfirm
 
 # ------------------------------------------------------------------------------
 # 2. Deploy NVIDIA Drivers via Standalone Script
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 3/7] Running NVIDIA driver installation script...${CLEAR}"
+echo -e "\n${YELLOW}[Step 3/8] Running NVIDIA driver installation script...${CLEAR}"
 
-if [ -f "./nvidia2-arch.sh" ]; then
-    chmod +x nvidia2-arch.sh
-    ./nvidia2-arch.sh
+if [ -f "./nvidia-arch.sh" ]; then
+    chmod +x nvidia-arch.sh
+    ./nvidia-arch.sh
 else
-    echo -e "${RED}❌ Critical Error: nvidia2-arch.sh not found.${CLEAR}"
+    echo -e "${RED}❌ Critical Error: nvidia-arch.sh not found.${CLEAR}"
     exit 1
 fi
 
 # ------------------------------------------------------------------------------
-# 3. Install GNU Stow First
+# 3. Install GNU Stow & Zsh
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 4/7] Installing GNU Stow...${CLEAR}"
+echo -e "\n${YELLOW}[Step 4/8] Installing GNU Stow and Zsh...${CLEAR}"
 sudo pacman -S --needed --noconfirm stow zsh
 
 # ------------------------------------------------------------------------------
 # 4. Deploy Shell Frameworks (Pre-empting Stow Conflicts)
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 5/7] Deploying runtime shell framework tools...${CLEAR}"
+echo -e "\n${YELLOW}[Step 5/8] Deploying runtime shell framework tools...${CLEAR}"
 
 # Install Oh My Zsh framework first so it does not overwrite Stow definitions later
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -84,7 +84,7 @@ fi
 # ------------------------------------------------------------------------------
 # 5. Install Core Native Arch Packages
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 6/7] Installing remaining native Arch packages...${CLEAR}"
+echo -e "\n${YELLOW}[Step 6/8] Installing remaining native Arch packages...${CLEAR}"
 
 PACKAGES=(
     curl
@@ -102,17 +102,34 @@ PACKAGES=(
     go
     github-cli
     tree-sitter-cli
-    zen-browser-bin
     ttf-jetbrains-mono-nerd
     wl-clipboard
+    bitwarden
 )
 
 sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
 
+# Handle AUR packages separately if an AUR helper exists, or prompt installation
+AUR_PACKAGES=(
+    zen-browser-bin
+    tableplus
+    ventoy-bin
+)
+
+if command -v yay &> /dev/null; then
+    echo -e "\n${YELLOW}Installing AUR packages via yay...${CLEAR}"
+    yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
+elif command -v paru &> /dev/null; then
+    echo -e "\n${YELLOW}Installing AUR packages via paru...${CLEAR}"
+    paru -S --needed --noconfirm "${AUR_PACKAGES[@]}"
+else
+    echo -e "\n${YELLOW}Notice: No AUR helper (yay/paru) found. Skipping AUR packages: ${AUR_PACKAGES[*]}${CLEAR}"
+fi
+
 # ------------------------------------------------------------------------------
 # 6. Provision Third-Party Scripts & Daemons
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 7/7] Deploying toolchain environments & daemons...${CLEAR}"
+echo -e "\n${YELLOW}[Step 7/8] Deploying toolchain environments & daemons...${CLEAR}"
 
 # Install Oh My Zsh External Plugins if missing
 ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
@@ -164,7 +181,7 @@ fi
 # ------------------------------------------------------------------------------
 # 7. Deploy Steam via Standalone Script
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}[Step 3/7] Running STEAM installation script...${CLEAR}"
+echo -e "\n${YELLOW}[Step 8/8] Running STEAM installation script...${CLEAR}"
 
 if [ -f "./steam.sh" ]; then
     chmod +x steam.sh
@@ -186,6 +203,6 @@ else
 fi
 
 echo -e "\n${GREEN}==================================================================${CLEAR}"
-echo -e "${GREEN}  Provisioning complete! Your single ~/.zshrc file handles the rest!${CLEAR}"
-echo -e "${GREEN}  Run: source ~/.zshrc                                            ${CLEAR}"
+echo -e "${GREEN}  Provisioning complete! Your single ~/.zshrc file handles the rest! ${CLEAR}"
+echo -e "${GREEN}  Run: source ~/.zshrc                                           ${CLEAR}"
 echo -e "${GREEN}==================================================================${CLEAR}"
