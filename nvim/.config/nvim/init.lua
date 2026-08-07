@@ -54,7 +54,7 @@ do
   vim.o.smartcase = true
 
   -- Keep signcolumn on by default
-  vim.o.signcolumn = 'yes'
+  vim.o.signcolumn = 'no'
 
   -- Decrease update time
   vim.o.updatetime = 250
@@ -922,6 +922,7 @@ do
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   require 'custom.plugins'
+  vim.api.nvim_set_hl(0,"Normal",{bg = "none"})
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`

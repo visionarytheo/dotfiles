@@ -14,8 +14,16 @@ echo -e "${BLUE}================================================================
 echo -e "${GREEN}      Starting Automated Workspace Provisioning Core Script      ${CLEAR}"
 echo -e "${BLUE}==================================================================${CLEAR}"
 
+# Configure Git user details
+echo -e "\n${YELLOW}[Step] Configuring Git User Details...${CLEAR}"
 git config --global user.email "visionarytheo@gmail.com"
 git config --global user.name "Theo"
+
+# Enable Magic SysRq key
+echo -e "\n${YELLOW}[Step] Configuring SysRq Kernel Parameters...${CLEAR}"
+echo "kernel.sysrq = 1" | sudo tee /etc/sysctl.d/99-sysrq.conf > /dev/null
+sudo sysctl --system > /dev/null
+echo -e "${GREEN}✓ SysRq enabled.${CLEAR}"
 
 # ------------------------------------------------------------------------------
 # 0. Execute Chaotic-AUR Setup
@@ -53,7 +61,7 @@ fi
 # 3. Install GNU Stow & Zsh
 # ------------------------------------------------------------------------------
 echo -e "\n${YELLOW}[Step 4/8] Installing GNU Stow and Zsh...${CLEAR}"
-sudo pacman -S --needed --noconfirm stow zsh
+sudo pacman -S --needed --noconfirm stow zsh curl
 
 # ------------------------------------------------------------------------------
 # 4. Deploy Shell Frameworks (Pre-empting Stow Conflicts)
@@ -87,7 +95,6 @@ fi
 echo -e "\n${YELLOW}[Step 6/8] Installing remaining native Arch packages...${CLEAR}"
 
 PACKAGES=(
-    curl
     zip
     unzip
     fzf

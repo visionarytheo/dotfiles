@@ -54,7 +54,7 @@ else
 fi
 
 # Check if 580xx branch from Chaotic-AUR is present to prevent package conflicts
-if pacman -Qs nvidia-580xx-dkms &>/dev/null; then
+if pacman -Ss nvidia-580xx-dkms &>/dev/null; then
     echo "Detected Chaotic-AUR nvidia-580xx driver branch. Using 580xx packages..."
     PKGS=(
         "$HEADERS_PKG"
