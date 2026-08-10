@@ -11,10 +11,5 @@ vim.pack.add {
   gh 'AlexvZyl/nordic.nvim',
 }
 
--- 2. Configure Gruvbox styles
-require('gruvbox').setup {
-  contrast = 'hard',
-}
-
 -- 3. Set the global colorscheme
-vim.cmd.colorscheme 'nordic'
+vim.cmd.colorscheme 'gruvbox'

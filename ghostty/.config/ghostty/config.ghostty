@@ -1,6 +1,6 @@
 font-family = JetBrainsMono Nerd Font
-font-size = 14
-theme =	Nord
+font-size = 16
+theme = Gruvbox Material
 
 window-padding-x = 6
 window-padding-y = 6
