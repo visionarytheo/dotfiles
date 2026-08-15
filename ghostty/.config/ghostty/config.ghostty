@@ -1,12 +1,9 @@
+# Import dynamic theme symlink
+config-file = theme.conf
+
+# Base settings
 font-family = JetBrainsMono Nerd Font
-font-size = 16
-theme = Gruvbox Material
-
-window-padding-x = 6
-window-padding-y = 6
-
-# Borderless Wayland Visual Modifiers
+font-size = 13
+window-padding-x = 12
+window-padding-y = 12
 window-decoration = false
-gtk-titlebar = false
-window-padding-x = 0
-window-padding-y = 0

@@ -42,6 +42,10 @@ PACKAGES=(
     "ghostty"
     "nvim"
     "fastfetch"
+    "hypr" 
+    "waybar"
+    "rofi"
+    "gtk"
 )
 
 echo -e "\n${GREEN}🔗 Symlinking packages with GNU Stow...${NC}"

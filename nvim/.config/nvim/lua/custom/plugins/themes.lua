@@ -8,8 +8,12 @@ vim.pack.add {
   gh 'folke/tokyonight.nvim',
   gh 'craftzdog/solarized-osaka.nvim',
   gh 'shaunsingh/nord.nvim',
+  gh 'dracula/vim',
   gh 'AlexvZyl/nordic.nvim',
 }
 
--- 3. Set the global colorscheme
-vim.cmd.colorscheme 'gruvbox'
+-- 2. Load active theme directly from current_theme directory
+local theme_file = os.getenv("HOME") .. "/.config/hypr/current_theme/nvim.lua"
+if vim.fn.filereadable(theme_file) == 1 then
+	dofile(theme_file)
+end

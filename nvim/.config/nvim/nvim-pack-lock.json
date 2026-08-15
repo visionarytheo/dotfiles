@@ -160,6 +160,10 @@
       "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
       "src": "https://github.com/folke/tokyonight.nvim"
     },
+    "vim": {
+      "rev": "e7817b4baccfb3529f709ac048c621f35cdbc5b3",
+      "src": "https://github.com/dracula/vim"
+    },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
       "src": "https://github.com/folke/which-key.nvim"

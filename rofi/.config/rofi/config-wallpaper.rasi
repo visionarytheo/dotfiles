@@ -1,0 +1,88 @@
+@import "theme.rasi"
+
+configuration {
+    modi: "dmenu";
+    show-icons: true;
+}
+
+* {
+    font: "JetBrainsMono Nerd Font 10";
+}
+
+window {
+    width: 70%;
+    height: 75%;
+    location: center;
+    anchor: center;
+    border-radius: 12px;
+    background-color: #282828;
+    border: 2px;
+    border-color: #504945;
+    padding: 20px;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ "inputbar", "listview" ];
+    spacing: 15px;
+}
+
+inputbar {
+    background-color: #3c3836;
+    border-radius: 8px;
+    padding: 10px 15px;
+    children: [ "prompt", "entry" ];
+}
+
+prompt {
+    background-color: transparent;
+    text-color: #fabd2f;
+    margin: 0px 10px 0px 0px;
+}
+
+entry {
+    background-color: transparent;
+    text-color: #ebdbb2;
+    placeholder: "Search wallpapers...";
+    placeholder-color: #928374;
+}
+
+listview {
+    background-color: transparent;
+    columns: 3;
+    lines: 2;
+    spacing: 15px;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+    flow: horizontal;
+}
+
+element {
+    background-color: #3c3836;
+    text-color: #ebdbb2;
+    orientation: vertical;
+    border-radius: 8px;
+    padding: 10px;
+    spacing: 8px;
+}
+
+element selected {
+    background-color: #504945;
+    text-color: #fabd2f;
+    border: 2px;
+    border-color: #fabd2f;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 200px;
+    horizontal-align: 0.5;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+}

@@ -3,7 +3,7 @@
 # ==============================================================================
 export ZSH="$HOME/.oh-my-zsh"
 export SDKMAN_DIR="$HOME/.sdkman"
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$HOME/.config/nvm"
 export LD_PRELOAD=$LD_PRELOAD:/usr/lib/libgamemode.so
 
 # System Default Editors
