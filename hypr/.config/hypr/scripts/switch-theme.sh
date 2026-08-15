@@ -68,7 +68,14 @@ if [ -n "$SELECTED" ]; then
             ln -sf "$TARGET_THEME/ghostty.conf" "$HOME/.config/ghostty/theme.conf"
         fi
 
-        # 5. Apply default wallpaper from new theme
+        # 5. Link Kitty theme if it exists
+if [ -f "$TARGET_THEME/kitty.conf" ]; then
+    ln -sf "$TARGET_THEME/kitty.conf" "$HOME/.config/kitty/theme.conf"
+    # Send signal to reload Kitty colors instantly without restarting
+    killall -SIGUSR1 kitty 2>/dev/null
+fi
+
+        # 6. Apply default wallpaper from new theme
         FIRST_WALL=$(find -L "$TARGET_THEME/wallpapers" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) 2>/dev/null | head -n 1)
         if [ -n "$FIRST_WALL" ]; then
             if ! pgrep -x "awww-daemon" > /dev/null; then
@@ -78,7 +85,7 @@ if [ -n "$SELECTED" ]; then
             awww img "$FIRST_WALL" --transition-type outer --transition-fps 60 --transition-step 90
         fi
 
-        # 6. Reload Hyprland to process new theme bindings/colors
+        # 7. Reload Hyprland to process new theme bindings/colors
         hyprctl reload >/dev/null 2>&1
 
         notify-send "Theme Switched" "Active theme set to $SELECTED" -i "${FIRST_WALL:-dialog-information}"

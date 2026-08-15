@@ -19,7 +19,7 @@ hl.monitor({
 
 local home = os.getenv("HOME")
 
-local terminal = "ghostty"
+local terminal = "kitty"
 local fileManager = "nautilus"
 local menu = "rofi -show drun -theme " .. home .. "/.config/rofi/config-theme.rasi"
 local browser = "google-chrome-stable"
@@ -71,8 +71,8 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 10,
-		rounding_power = 2,
+		rounding = 20,
+		rounding_power = 10,
 
 		active_opacity = 1.0,
 		inactive_opacity = 1.0,
