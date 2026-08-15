@@ -26,8 +26,9 @@ truncation_length = 4
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
-"Developer" = "󰲋 "
+"Dev" = "󰲋 "
 "Others" = " "
+".config" = " "
 
 [username]
 disabled = true

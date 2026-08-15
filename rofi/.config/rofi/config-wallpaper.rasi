@@ -1,7 +1,6 @@
 @import "theme.rasi"
 
 configuration {
-    modi: "dmenu";
     show-icons: true;
 }
 

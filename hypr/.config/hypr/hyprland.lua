@@ -21,7 +21,7 @@ local home = os.getenv("HOME")
 
 local terminal = "ghostty"
 local fileManager = "nautilus"
-local menu = "rofi -show drun -theme " .. home .. "/.config/rofi/themes/config.rasi"
+local menu = "rofi -show drun -theme " .. home .. "/.config/rofi/config-theme.rasi"
 local browser = "google-chrome-stable"
 
 -- Custom Picker Scripts
