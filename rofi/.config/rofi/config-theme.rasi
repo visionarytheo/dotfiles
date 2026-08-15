@@ -9,7 +9,7 @@ configuration {
 }
 
 window {
-    width: 380px;
+    width: 65%;
     location: center;
     anchor: center;
     border-radius: 12px;
@@ -22,7 +22,7 @@ window {
 mainbox {
     background-color: transparent;
     children: [ "inputbar", "listview" ];
-    spacing: 12px;
+    spacing: 16px;
 }
 
 inputbar {
@@ -47,20 +47,21 @@ entry {
 
 listview {
     background-color: transparent;
-    columns: 1;
-    lines: 5;
-    spacing: 8px;
+    columns: 4;
+    lines: 2;
+    spacing: 16px;
     cycle: true;
     dynamic: true;
+    flow: horizontal;
 }
 
 element {
     background-color: #3c3836;
     text-color: #ebdbb2;
-    orientation: horizontal;
+    orientation: vertical;
     border-radius: 8px;
-    padding: 8px 12px;
-    spacing: 12px;
+    padding: 12px;
+    spacing: 8px;
 }
 
 element selected {
@@ -72,7 +73,7 @@ element selected {
 
 element-icon {
     background-color: transparent;
-    size: 36px;
+    size: 160px;
     horizontal-align: 0.5;
     vertical-align: 0.5;
 }
@@ -80,5 +81,7 @@ element-icon {
 element-text {
     background-color: transparent;
     text-color: inherit;
+    horizontal-align: 0.5;
     vertical-align: 0.5;
+    margin: 4px 0px 0px 0px;
 }

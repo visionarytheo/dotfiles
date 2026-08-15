@@ -53,12 +53,14 @@ if [ -n "$SELECTED" ]; then
 
         # 2. Apply Waybar styling
         if [ -f "$TARGET_THEME/waybar.css" ]; then
+            mkdir -p "$HOME/.config/waybar"
             ln -sf "$TARGET_THEME/waybar.css" "$HOME/.config/waybar/style.css"
             pkill waybar && waybar >/dev/null 2>&1 &
         fi
 
         # 3. Apply Rofi colors
         if [ -f "$TARGET_THEME/rofi.rasi" ]; then
+            mkdir -p "$HOME/.config/rofi"
             ln -sf "$TARGET_THEME/rofi.rasi" "$HOME/.config/rofi/theme.rasi"
         fi
 
@@ -69,20 +71,21 @@ if [ -n "$SELECTED" ]; then
         fi
 
         # 5. Link Kitty theme if it exists
-if [ -f "$TARGET_THEME/kitty.conf" ]; then
-    ln -sf "$TARGET_THEME/kitty.conf" "$HOME/.config/kitty/theme.conf"
-    # Send signal to reload Kitty colors instantly without restarting
-    killall -SIGUSR1 kitty 2>/dev/null
-fi
+        if [ -f "$TARGET_THEME/kitty.conf" ]; then
+            mkdir -p "$HOME/.config/kitty"
+            ln -sf "$TARGET_THEME/kitty.conf" "$HOME/.config/kitty/theme.conf"
+            # Send signal to reload Kitty colors instantly without restarting
+            killall -SIGUSR1 kitty 2>/dev/null
+        fi
 
         # 6. Apply default wallpaper from new theme
         FIRST_WALL=$(find -L "$TARGET_THEME/wallpapers" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) 2>/dev/null | head -n 1)
         if [ -n "$FIRST_WALL" ]; then
-            if ! pgrep -x "awww-daemon" > /dev/null; then
-                awww-daemon &
+            if ! pgrep -x "swww-daemon" > /dev/null; then
+                swww-daemon &
                 sleep 0.2
             fi
-            awww img "$FIRST_WALL" --transition-type outer --transition-fps 60 --transition-step 90
+            swww img "$FIRST_WALL" --transition-type outer --transition-fps 60 --transition-step 90
         fi
 
         # 7. Reload Hyprland to process new theme bindings/colors
