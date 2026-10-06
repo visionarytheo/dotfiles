@@ -25,7 +25,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "global-transparency",
 	match = { class = ".*" },
-	opacity = "0.92 0.85",
+	opacity = "0.95 0.85",
 })
 
 -- Keep Web Browsers Opaque for accurate color/video playback

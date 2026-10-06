@@ -14,14 +14,19 @@ hl.bind(
 )
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(FILE_MANAGER))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(BROWSER))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(SPOTIFY))
+hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd(YOUTUBE))
+hl.bind(mainMod .. " + SHIFT + Y", hl.dsp.exec_cmd(YOUTUBE_MUSIC))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(MENU))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(POWER_MENU))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("togglesplit")) -- Moved to SHIFT + J to free J for focus down
 
 -- Custom Rofi Picker Hotkeys
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(WALLPAPER_PICKER))
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(THEME_PICKER))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(CLIPBOARD_MANAGER))
 
 -- Focus Navigation (Arrows + Vim hjkl)
 local directions = {
@@ -100,3 +105,8 @@ hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+
+-- Screenshot Binds
+--hl.bind("", "Print", hl.dsp.exec_cmd(SCREENSHOT_AREA))                 -- Snip region (PrtScn)
+hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd(SCREENSHOT_AREA))   -- Snip region (SUPER + SHIFT + P)
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(SCREENSHOT_FULL))       -- Fullscreen snap (SUPER + PrtScn)
