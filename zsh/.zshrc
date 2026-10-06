@@ -57,9 +57,28 @@ fp() {
 eval "$(starship init zsh)"
 
 # Display System Technical Profile Overview
-fastfetch
+#fastfetch
 
 # ==============================================================================
 # 6. Legacy Hooks (CRITICAL: MUST REMAIN AT THE ABSOLUTE BOTTOM)
 # ==============================================================================
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# bun completions
+[ -s "/home/theo/.bun/_bun" ] && source "/home/theo/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# OCI Configuration Defaults
+export OCI_TENANCY_OCID="ocid1.tenancy.oc1..aaaaaaaaz4vvz4nntixk6ibsc7l4ivzm6m4coxqghp3tqcb2qskaxr2vdh2a"
+export OCI_USER_OCID="ocid1.user.oc1..aaaaaaaaeqc6cgdbxwetvy2yrdpr2gsguougljzj46fb3qvuhdbonaq5jehq"
+export OCI_REGION="af-johannesburg-1" # Or whichever region you use
+
+# Optional: Variables for your custom launch script
+export OCI_COMPARTMENT_OCID="ocid1.tenancy.oc1..aaaaaaaaz4vvz4nntixk6ibsc7l4ivzm6m4coxqghp3tqcb2qskaxr2vdh2a"
+export OCI_SUBNET_OCID="ocid1.subnet.oc1.af-johannesburg-1.aaaaaaaanaplb6rnmp2f3i6zz2julmic4p7w3fwhoylmonncbnkqwbsl6n6q"
+export PATH="$HOME/bin:$PATH"
+
+DISABLE_AUTO_TITLE="true"
