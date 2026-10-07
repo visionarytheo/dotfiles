@@ -51,17 +51,23 @@ if [ -z "$MENU_ENTRIES" ]; then
     exit 1
 fi
 
-# Pass entries to Rofi
-if [ -f "$ROFI_CONF" ]; then
-    SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰸉 Select Wallpaper" -show-icons -theme "$ROFI_CONF")
+# Accept direct image path argument or fall back to Rofi selection
+if [ -n "$1" ]; then
+    IMAGE_PATH=$(realpath "$1")
 else
-    SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰸉 Select Wallpaper" -show-icons)
+    if [ -f "$ROFI_CONF" ]; then
+        SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰸉 Select Wallpaper" -show-icons -theme "$ROFI_CONF")
+    else
+        SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰸉 Select Wallpaper" -show-icons)
+    fi
+
+    if [ -n "$SELECTED" ]; then
+        IMAGE_PATH=$(realpath "$WALL_DIR/$SELECTED")
+    fi
 fi
 
 # Apply wallpaper via awww
-if [ -n "$SELECTED" ]; then
-    IMAGE_PATH=$(realpath "$WALL_DIR/$SELECTED")
-
+if [ -n "$IMAGE_PATH" ] && [ -f "$IMAGE_PATH" ]; then
     if ! pgrep -x "awww-daemon" > /dev/null; then
         mkdir -p "$HOME/.cache/awww"
         awww-daemon &
@@ -73,5 +79,5 @@ if [ -n "$SELECTED" ]; then
         --transition-fps 60 \
         --transition-step 90
 
-    notify-send "Wallpaper Changed" "Applied $SELECTED" -i "$IMAGE_PATH"
+    notify-send "Wallpaper Changed" "Applied $(basename "$IMAGE_PATH")" -i "$IMAGE_PATH"
 fi

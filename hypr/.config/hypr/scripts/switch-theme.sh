@@ -36,11 +36,15 @@ if [ -z "$MENU_ENTRIES" ]; then
     exit 1
 fi
 
-# Launch Rofi
-if [ -f "$ROFI_CONF" ]; then
-    SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰔎 Select Theme" -show-icons -theme "$ROFI_CONF")
+# Select theme via argument or fallback to Rofi menu
+if [ -n "$1" ]; then
+    SELECTED="$1"
 else
-    SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰔎 Select Theme" -show-icons)
+    if [ -f "$ROFI_CONF" ]; then
+        SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰔎 Select Theme" -show-icons -theme "$ROFI_CONF")
+    else
+        SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰔎 Select Theme" -show-icons)
+    fi
 fi
 
 # Apply selected theme
@@ -78,14 +82,14 @@ if [ -n "$SELECTED" ]; then
             killall -SIGUSR1 kitty 2>/dev/null
         fi
 
-        # 6. Apply default wallpaper from new theme
+        # 6. Apply default wallpaper from new theme using awww
         FIRST_WALL=$(find -L "$TARGET_THEME/wallpapers" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) 2>/dev/null | head -n 1)
         if [ -n "$FIRST_WALL" ]; then
-            if ! pgrep -x "swww-daemon" > /dev/null; then
-                swww-daemon &
+            if ! pgrep -x "awww-daemon" > /dev/null; then
+                awww-daemon &
                 sleep 0.2
             fi
-            swww img "$FIRST_WALL" --transition-type outer --transition-fps 60 --transition-step 90
+            awww img "$FIRST_WALL" --transition-type outer --transition-fps 60 --transition-step 90
         fi
 
         # 7. Reload Hyprland to process new theme bindings/colors

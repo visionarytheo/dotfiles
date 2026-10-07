@@ -18,20 +18,29 @@ hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(SPOTIFY))
 hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd(YOUTUBE))
 hl.bind(mainMod .. " + SHIFT + Y", hl.dsp.exec_cmd(YOUTUBE_MUSIC))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(MENU))
+
+-- Quickshell Dynamic Island Hub Binds
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc call launcher toggle"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("qs ipc call launcher openTab 1"))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("qs ipc call launcher openTab 2"))
+
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(POWER_MENU))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("togglesplit")) -- Moved to SHIFT + J to free J for focus down
+hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("togglesplit"))
 
--- Custom Rofi Picker Hotkeys
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(WALLPAPER_PICKER))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(THEME_PICKER))
+-- Custom Rofi Picker Hotkeys (Clipboard retained)
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(CLIPBOARD_MANAGER))
 
 -- Focus Navigation (Arrows + Vim hjkl)
 local directions = {
-	left = "left", right = "right", up = "up", down = "down",
-	h = "left", l = "right", k = "up", j = "down"
+	left = "left",
+	right = "right",
+	up = "up",
+	down = "down",
+	h = "left",
+	l = "right",
+	k = "up",
+	j = "down",
 }
 
 for key, dir in pairs(directions) do
@@ -107,6 +116,5 @@ hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tru
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
 -- Screenshot Binds
---hl.bind("", "Print", hl.dsp.exec_cmd(SCREENSHOT_AREA))                 -- Snip region (PrtScn)
-hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd(SCREENSHOT_AREA))   -- Snip region (SUPER + SHIFT + P)
-hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(SCREENSHOT_FULL))       -- Fullscreen snap (SUPER + PrtScn)
+hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd(SCREENSHOT_AREA))
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd(SCREENSHOT_FULL))

@@ -46,6 +46,8 @@ PACKAGES=(
     "waybar"
     "rofi"
     "gtk"
+    "kitty"
+    "quickshell"
 )
 
 echo -e "\n${GREEN}🔗 Symlinking packages with GNU Stow...${NC}"

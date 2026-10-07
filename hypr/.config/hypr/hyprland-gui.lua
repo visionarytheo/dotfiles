@@ -7,8 +7,10 @@ hl.config({
         rounding = 20,
     },
     general = {
+        allow_tearing = false,
+        border_size = 2,
         gaps_in = 4,
-        gaps_out = 50,
+        gaps_out = 63,
         layout = "scrolling",
     },
     misc = {
@@ -22,4 +24,14 @@ hl.animation({
     enabled = true,
     speed = 1.0,
     bezier = "default",
+})
+
+-- Monitors
+hl.monitor({
+    output = "DP-2",
+    disabled = false,
+    mode = "2560x1440@144.00Hz",
+    position = "0x0",
+    scale = 1,
+    cm = "srgb",
 })

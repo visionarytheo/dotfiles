@@ -118,7 +118,7 @@ sudo pacman -S --needed --noconfirm "${PACKAGES[@]}"
 
 # Handle AUR packages separately if an AUR helper exists, or prompt installation
 AUR_PACKAGES=(
-    zen-browser-bin
+    helium-bin
     tableplus
     ventoy-bin
 )
