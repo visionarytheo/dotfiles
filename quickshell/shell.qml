@@ -247,9 +247,9 @@ Scope {
             border.color: launcherState.isOpen ? "#fabd2f" : (barWindow.isExpanded ? "#3c3836" : "#161616")
             border.width: 1
 
-            Behavior on width { NumberAnimation { duration: 350; easing.type: Easing.OutCubic } }
-            Behavior on height { NumberAnimation { duration: 350; easing.type: Easing.OutCubic } }
-            Behavior on radius { NumberAnimation { duration: 300 } }
+            Behavior on width { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
+            Behavior on height { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
+            Behavior on radius { NumberAnimation { duration: 200 } }
 
             MouseArea {
                 anchors.fill: parent
