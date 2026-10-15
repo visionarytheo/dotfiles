@@ -594,6 +594,7 @@ do
   local servers = {
     -- clangd = {},
     gopls = {},
+    gofumpt = {},
     -- pyright = {},
     -- rust_analyzer = {},
     --
@@ -716,6 +717,7 @@ do
         json = true,
         jsonc = true,
         html = true,
+        go = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -736,6 +738,7 @@ do
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
       java = { 'google-java-format' },
       sql = { 'postgres-language-server' },
+      go = { 'gofumpt' },
 
       -- JavaScript & TypeScript (Uses Biome first, falls back to prettierd)
       javascript = { 'biome', 'prettierd' },
@@ -807,7 +810,7 @@ do
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
-      nerd_font_variant = 'normal',
+      nerd_font_variant = 'mono',
     },
 
     completion = {

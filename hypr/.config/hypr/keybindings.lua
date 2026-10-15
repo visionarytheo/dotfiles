@@ -6,6 +6,7 @@ local mainMod = "SUPER"
 
 -- Core Application Binds
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(TERMINAL))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(CODE))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + F11", hl.dsp.window.fullscreen())
 hl.bind(
@@ -20,9 +21,9 @@ hl.bind(mainMod .. " + SHIFT + Y", hl.dsp.exec_cmd(YOUTUBE_MUSIC))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 
 -- Quickshell Dynamic Island Hub Binds
-hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc call launcher toggle"))
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("qs ipc call launcher openTab 1"))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("qs ipc call launcher openTab 2"))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(MENU))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(WALLPAPER_PICKER))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd(THEME_PICKER))
 
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(POWER_MENU))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())

@@ -1,83 +1,65 @@
 #!/usr/bin/env bash
 
-WALL_DIR="$HOME/.config/hypr/current_theme/wallpapers"
+CURRENT_THEME="$HOME/.config/hypr/current_theme"
+WALL_DIR="$CURRENT_THEME/wallpapers"
 ROFI_CONF="$HOME/.config/rofi/config-wallpaper.rasi"
-CACHE_DIR="$HOME/.cache/rofi-wallpapers"
-
-mkdir -p "$CACHE_DIR"
 
 if [ ! -d "$WALL_DIR" ]; then
-    WALL_DIR="$HOME/Pictures/Wallpapers"
-fi
-
-# Detect ImageMagick command (magick or convert)
-MAGICK_CMD=""
-if command -v magick &>/dev/null; then
-    MAGICK_CMD="magick"
-elif command -v convert &>/dev/null; then
-    MAGICK_CMD="convert"
-fi
-
-MENU_ENTRIES=""
-
-while IFS= read -r img; do
-    [ -z "$img" ] && continue
-    filename=$(basename "$img")
-    filepath=$(realpath "$img")
-
-    # Generate unique hash for cache filename based on full path
-    hash=$(echo -n "$filepath" | md5sum | cut -d' ' -f1)
-    thumb_path="$CACHE_DIR/${hash}.png"
-
-    # Pre-assign thumbnail path if ImageMagick is available
-    if [ -n "$MAGICK_CMD" ]; then
-        if [ ! -f "$thumb_path" ] || [ "$filepath" -nt "$thumb_path" ]; then
-            "$MAGICK_CMD" "$filepath" -thumbnail 300x200^ -gravity center -extent 300x200 "$thumb_path" &
-        fi
-        ICON_PATH="$thumb_path"
-    else
-        ICON_PATH="$filepath"
-    fi
-
-    MENU_ENTRIES+="${filename}\x00icon\x1f${ICON_PATH}\n"
-done < <(find -L "$WALL_DIR" -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \))
-
-# Wait for background thumbnail processes to finish before opening Rofi
-wait
-
-# Exit gracefully if no wallpapers were found
-if [ -z "$MENU_ENTRIES" ]; then
-    notify-send "Wallpaper Selector" "No wallpapers found in $WALL_DIR" -u low
+    notify-send "Wallpaper Picker" "No wallpapers directory found at $WALL_DIR" -u critical
     exit 1
 fi
 
-# Accept direct image path argument or fall back to Rofi selection
-if [ -n "$1" ]; then
-    IMAGE_PATH=$(realpath "$1")
-else
-    if [ -f "$ROFI_CONF" ]; then
-        SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰸉 Select Wallpaper" -show-icons -theme "$ROFI_CONF")
-    else
-        SELECTED=$(printf "%b" "$MENU_ENTRIES" | rofi -dmenu -i -p "󰸉 Select Wallpaper" -show-icons)
-    fi
+WALL_COUNT=0
+while IFS= read -r _; do
+    WALL_COUNT=$((WALL_COUNT + 1))
+done < <(find -L "$WALL_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) 2>/dev/null)
 
-    if [ -n "$SELECTED" ]; then
-        IMAGE_PATH=$(realpath "$WALL_DIR/$SELECTED")
-    fi
+if [ "$WALL_COUNT" -eq 0 ]; then
+    notify-send "Wallpaper Picker" "No wallpapers found in $WALL_DIR" -u low
+    exit 1
+fi
+
+# Calculate width and columns
+if [ "$WALL_COUNT" -eq 1 ]; then
+    DYNAMIC_WIDTH=220
+    DYNAMIC_COLS=1
+elif [ "$WALL_COUNT" -eq 2 ]; then
+    DYNAMIC_WIDTH=440
+    DYNAMIC_COLS=2
+else
+    DYNAMIC_WIDTH=665
+    DYNAMIC_COLS=3
+fi
+
+ROFI_DYNAMIC_STR="window { width: ${DYNAMIC_WIDTH}px; } listview { columns: ${DYNAMIC_COLS}; }"
+
+generate_wall_entries() {
+    for _ in {1..4}; do
+        while IFS= read -r wall_path; do
+            [ -n "$wall_path" ] || continue
+            wall_name=$(basename "$wall_path")
+            printf '%s\0icon\x1f%s\n' "$wall_name" "$wall_path"
+        done < <(find -L "$WALL_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) 2>/dev/null | sort)
+    done
+}
+
+# Select wallpaper
+if [ -f "$ROFI_CONF" ]; then
+    SELECTED_NAME=$(generate_wall_entries | rofi -dmenu -i -selected-row 0 -p "󰸉 Select Wallpaper" -show-icons -theme "$ROFI_CONF" -theme-str "$ROFI_DYNAMIC_STR")
+else
+    SELECTED_NAME=$(generate_wall_entries | rofi -dmenu -i -selected-row 0 -p "󰸉 Select Wallpaper" -show-icons -theme-str "$ROFI_DYNAMIC_STR")
 fi
 
 # Apply wallpaper via awww
-if [ -n "$IMAGE_PATH" ] && [ -f "$IMAGE_PATH" ]; then
-    if ! pgrep -x "awww-daemon" > /dev/null; then
-        mkdir -p "$HOME/.cache/awww"
-        awww-daemon &
-        sleep 0.2
+if [ -n "$SELECTED_NAME" ]; then
+    SELECTED_PATH="$WALL_DIR/$SELECTED_NAME"
+    if [ -f "$SELECTED_PATH" ]; then
+        if ! pgrep -x "awww-daemon" > /dev/null; then
+            mkdir -p "$HOME/.cache/awww"
+            awww-daemon &
+            sleep 0.2
+        fi
+        awww img "$SELECTED_PATH" --transition-type outer --transition-fps 60 --transition-step 90
+        notify-send "Wallpaper Updated" "Set to $SELECTED_NAME" -i "$SELECTED_PATH"
     fi
-
-    awww img "$IMAGE_PATH" \
-        --transition-type outer \
-        --transition-fps 60 \
-        --transition-step 90
-
-    notify-send "Wallpaper Changed" "Applied $(basename "$IMAGE_PATH")" -i "$IMAGE_PATH"
 fi

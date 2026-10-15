@@ -13,7 +13,5 @@ vim.pack.add {
 }
 
 -- 2. Load active theme directly from current_theme directory
-local theme_file = os.getenv("HOME") .. "/.config/hypr/current_theme/nvim.lua"
-if vim.fn.filereadable(theme_file) == 1 then
-	dofile(theme_file)
-end
+local theme_file = os.getenv 'HOME' .. '/.config/hypr/current_theme/nvim.lua'
+if vim.fn.filereadable(theme_file) == 1 then dofile(theme_file) end

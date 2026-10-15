@@ -122,6 +122,9 @@ PACKAGES=(
     qt5-wayland
     qt6-wayland
     nwg-look
+    bluez
+    blueman
+    jq
 
     # Script Dependencies & Utilities
     imagemagick
@@ -140,6 +143,9 @@ AUR_PACKAGES=(
     tableplus
     ventoy-bin
     awww
+    obs-studio
+    iriunwebcam-bin
+    vscodium
 )
 
 if command -v yay &> /dev/null; then

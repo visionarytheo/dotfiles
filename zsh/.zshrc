@@ -39,6 +39,7 @@ eval "$(zoxide init zsh)"
 alias bat="bat"
 alias ls='eza --icons --color=always'
 alias c='clear'
+alias code='ELECTRON_OZONE_PLATFORM_HINT=auto codium'
 
 # Spring Boot Development Layouts
 alias spring-run='./mvnw spring-boot:run'

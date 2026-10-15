@@ -1,8 +1,9 @@
+-- Gruvbox Dark Hard
 hl.config({
 	general = {
 		col = {
-			active_border = { colors = { "rgba(161616aa)" } },
-			inactive_border = "rgba(3c3836aa)",
+			active_border = { colors = { "rgba(fabd2ffa)" } }, -- Using Gruvbox accent (#fabd2f)
+			inactive_border = "rgba(504945aa)",               -- Using Gruvbox border-col (#504945)
 		},
 	},
 })

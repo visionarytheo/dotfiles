@@ -5,75 +5,55 @@ configuration {
 }
 
 * {
-    font: "JetBrainsMono Nerd Font 11";
+    font: "JetBrainsMono Nerd Font 10";
 }
 
 window {
-    width: 65%;
+    height: 190px;
     location: center;
     anchor: center;
     border-radius: 12px;
-    background-color: #282828;
+    background-color: @bg;
     border: 2px;
-    border-color: #504945;
-    padding: 18px;
+    border-color: @border-col;
+    padding: 0px;
 }
 
 mainbox {
     background-color: transparent;
-    children: [ "inputbar", "listview" ];
-    spacing: 16px;
-}
-
-inputbar {
-    background-color: #3c3836;
-    border-radius: 8px;
-    padding: 8px 12px;
-    children: [ "prompt", "entry" ];
-}
-
-prompt {
-    background-color: transparent;
-    text-color: #fabd2f;
-    margin: 0px 8px 0px 0px;
-}
-
-entry {
-    background-color: transparent;
-    text-color: #ebdbb2;
-    placeholder: "Search themes...";
-    placeholder-color: #928374;
+    children: [ "listview" ];
+    spacing: 0px;
 }
 
 listview {
     background-color: transparent;
-    columns: 4;
-    lines: 2;
-    spacing: 16px;
+    layout: horizontal;
+    spacing: 0px;
     cycle: true;
     dynamic: true;
-    flow: horizontal;
+    fixed-height: false;
 }
 
 element {
-    background-color: #3c3836;
-    text-color: #ebdbb2;
+    background-color: transparent;
+    text-color: @fg;
     orientation: vertical;
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px;
     spacing: 8px;
+    width: 220px;
 }
 
 element selected {
-    background-color: #504945;
-    text-color: #fabd2f;
+    background-color: @bg-hover;
+    text-color: @accent;
     border: 2px;
-    border-color: #fabd2f;
+    border-color: @accent;
 }
 
 element-icon {
     background-color: transparent;
-    size: 160px;
+    size: 140px;
     horizontal-align: 0.5;
     vertical-align: 0.5;
 }
@@ -83,5 +63,4 @@ element-text {
     text-color: inherit;
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    margin: 4px 0px 0px 0px;
 }

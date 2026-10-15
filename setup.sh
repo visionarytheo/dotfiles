@@ -48,6 +48,14 @@ PACKAGES=(
     "gtk"
     "kitty"
     "quickshell"
+    "jq"
+    "vscodium"
+    "nautilus"
+    "iriunwebcam-bin"
+    "obs-studio"
+    "pavucontrol"
+    "bluez"
+    "blueman"
 )
 
 echo -e "\n${GREEN}🔗 Symlinking packages with GNU Stow...${NC}"

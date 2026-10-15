@@ -7,7 +7,7 @@
   min-height: 0;
 }
 
-window#waybar {
+#waybar {
   background-color: rgba(22, 22, 22, 0.92);
   color: #ebdbb2;
   border-bottom: 2px solid #161616;
@@ -49,12 +49,17 @@ window#waybar {
 }
 
 /* Right Modules */
-#pulseaudio {
-  color: #8ec07c;
+#bluetooth {
+  color: #83a598;
   padding: 0 10px;
 }
 
 #network {
   color: #fe8019;
+  padding: 0 10px;
+}
+
+#pulseaudio {
+  color: #8ec07c;
   padding: 0 10px;
 }

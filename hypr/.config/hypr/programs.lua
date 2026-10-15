@@ -3,8 +3,9 @@
 ---------------------
 
 TERMINAL = "kitty"
+CODE = "codium --ozone-platform=wayland"
 FILE_MANAGER = "nautilus"
-MENU = "qs ipc call launcher toggle"
+MENU = "rofi -show drun -theme ~/.config/rofi/config-applications.rasi"
 BROWSER = "google-chrome-stable"
 
 -- Web App Shortcuts
