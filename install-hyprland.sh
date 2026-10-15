@@ -132,6 +132,7 @@ PACKAGES=(
     dunst
     pavucontrol
     grim
+    hyprsunset
     slurp
 )
 

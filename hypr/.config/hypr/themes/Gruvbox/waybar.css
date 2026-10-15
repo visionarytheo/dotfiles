@@ -1,16 +1,16 @@
 * {
   border: none;
   border-radius: 0;
-  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-family: "SF Pro", monospace;
   font-size: 13px;
   font-weight: bold;
   min-height: 0;
 }
 
 #waybar {
-  background-color: rgba(22, 22, 22, 0.92);
+  background-color: rgba(32, 32, 32, 0.92);
   color: #ebdbb2;
-  border-bottom: 2px solid #161616;
+  border-bottom: 2px solid #202020;
 }
 
 /* Clock */
@@ -39,7 +39,7 @@
 
 #workspaces button.active,
 #workspaces button.focused {
-  color: #161616;
+  color: #202020;
   background-color: #fabd2f;
 }
 

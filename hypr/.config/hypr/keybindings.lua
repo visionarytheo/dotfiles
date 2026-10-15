@@ -2,6 +2,8 @@
 ---- KEYBINDINGS ----
 ---------------------
 
+---@diagnostic disable: undefined-global
+
 local mainMod = "SUPER"
 
 -- Core Application Binds

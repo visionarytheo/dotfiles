@@ -2,10 +2,12 @@
 ---- LOOK AND FEEL ----
 -----------------------
 
+---@diagnostic disable: undefined-global
+
 hl.config({
 	general = {
 		gaps_in = 8,
-		gaps_out = 20,
+		gaps_out = 50,
 		border_size = 1,
 
 		-- Default fallback borders (Overridden dynamically by current_theme/colors.lua)
@@ -16,7 +18,7 @@ hl.config({
 
 		resize_on_border = false,
 		allow_tearing = false,
-		layout = "dwindle",
+		layout = "scrolling",
 	},
 
 	decoration = {
@@ -43,6 +45,8 @@ hl.config({
 			contrast = 0.8,
 			vibrancy = 0.2,
 		},
+
+		screen_shader = "~/.config/hypr/shaders/tn_gamma.frag",
 	},
 
 	animations = {

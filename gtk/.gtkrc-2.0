@@ -2,10 +2,10 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/theo/.gtkrc-2.0.mine"
-gtk-theme-name="Catppuccin-Mocha-Standard-Mauve-Dark"
-gtk-icon-theme-name="Papirus-Dark"
-gtk-font-name="SF Mono 11"
-gtk-cursor-theme-name="Bibata-Modern-Ice"
+gtk-theme-name="Gruvbox-BL-MB-Dark"
+gtk-icon-theme-name="Gruvbox-Dark"
+gtk-font-name="SF Pro 11"
+gtk-cursor-theme-name="Bibata-Modern-Amber"
 gtk-cursor-theme-size=24
 gtk-toolbar-style=GTK_TOOLBAR_ICONS
 gtk-toolbar-icon-size=GTK_ICON_SIZE_SMALL_TOOLBAR

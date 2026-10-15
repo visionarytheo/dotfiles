@@ -2,6 +2,8 @@
 ---- INPUT ----
 ---------------
 
+---@diagnostic disable: undefined-global
+
 hl.config({
 	input = {
 		kb_layout = "us",
