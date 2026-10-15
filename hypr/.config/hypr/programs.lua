@@ -16,7 +16,7 @@ YOUTUBE_MUSIC = BROWSER .. " --app=https://music.youtube.com"
 -- Custom Picker Scripts
 WALLPAPER_PICKER = CONFIG_DIR .. "/scripts/wallpaper-picker.sh"
 THEME_PICKER = CONFIG_DIR .. "/scripts/switch-theme.sh"
-POWER_MENU = CONFIG_DIR .. "/power.sh"
+POWER_MENU = CONFIG_DIR .. "/scripts/power.sh"
 
 -- Screenshot Utilities
 local snap_dir = HOME .. "/Pictures/Screenshots"

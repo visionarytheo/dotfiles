@@ -7,7 +7,7 @@
 hl.config({
 	general = {
 		gaps_in = 8,
-		gaps_out = 50,
+		gaps_out = 100,
 		border_size = 1,
 
 		-- Default fallback borders (Overridden dynamically by current_theme/colors.lua)
@@ -22,7 +22,7 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 10,
+		rounding = 8,
 		rounding_power = 10,
 
 		active_opacity = 1.0,
@@ -45,8 +45,6 @@ hl.config({
 			contrast = 0.8,
 			vibrancy = 0.2,
 		},
-
-		screen_shader = "~/.config/hypr/shaders/tn_gamma.frag",
 	},
 
 	animations = {
