@@ -9,8 +9,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("blueman-applet &")
 	hl.exec_cmd("mkdir -p ~/.cache/awww && awww-daemon >/dev/null 2>&1 &")
 	hl.exec_cmd("waybar &")
-	hl.exec_cmd("hyprsunset -t 6800  &")
-	hl.exec_cmd("sleep 3 && hyprctl hyprsunset gamma 85")
+	--	hl.exec_cmd("hyprsunset -t 6800  &")
+	--	hl.exec_cmd("sleep 3 && hyprctl hyprsunset gamma 85")
 
 	-- Clipboard history daemons
 	hl.exec_cmd("wl-paste --type text --watch cliphist store &")

@@ -21,17 +21,17 @@
 
 /* Workspaces */
 #workspaces {
-  background-color: #3c3836;
+  /*background-color: #3c3836;*/
   margin: 4px 0;
   border-radius: 6px;
-  padding: 0 4px;
+  padding: 4px 6px;
 }
 
 #workspaces button {
   padding: 0 8px;
   color: #928374;
   background: transparent;
-  border-radius: 4px;
+  border-radius: 50px;
   box-shadow: none;
   text-shadow: none;
   transition: none;

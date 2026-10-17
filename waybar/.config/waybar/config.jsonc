@@ -1,8 +1,8 @@
 {
   "layer": "top",
-  "position": "top",
+  "position": "bottom",
   "mode": "dock",
-  "height": 30,
+  "height": 10,
   "spacing": 8,
 
   "modules-left": ["clock"],
@@ -13,23 +13,23 @@
     "disable-scroll": true,
     "all-outputs": true,
     "warp-on-scroll": false,
-    "format": "{name}",
+    "format": "{icon}",
     "format-icons": {
-      "1": "󰞷",
-      "2": "󰊯",
-      "3": "󰅩",
+      "1": "󰊯",
+      "2": "󰅩",
+      "3": "󰞷",
       "4": "󰓇",
       "5": "󰭹",
       "urgent": "󰀦",
       "focused": "󰮯",
-      "default": "󰊠"
-    }
+      "default": "󰊠",
+    },
   },
 
   "clock": {
     "format": "󰥔 {:%H:%M}",
     "format-alt": "󰃭 {:%Y-%m-%d}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
   },
 
   "network": {
@@ -39,7 +39,7 @@
     "format-disconnected": "󰤭 Off",
     "tooltip-format": "{ifname} via {gwaddr}",
     "format-alt": "󰩟 {ipaddr}",
-    "on-click": "nm-connection-editor"
+    "on-click": "nm-connection-editor",
   },
 
   "bluetooth": {
@@ -50,7 +50,7 @@
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
     "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
-    "on-click": "blueman-manager"
+    "on-click": "blueman-manager",
   },
 
   "pulseaudio": {
@@ -64,8 +64,8 @@
       "phone": "󰏲",
       "portable": "󰏲",
       "car": "󰄋",
-      "default": ["󰕿", "󰖀", "󰕾"]
+      "default": ["󰕿", "󰖀", "󰕾"],
     },
-    "on-click": "pavucontrol"
-  }
+    "on-click": "pavucontrol",
+  },
 }

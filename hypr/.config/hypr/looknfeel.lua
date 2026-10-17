@@ -6,9 +6,9 @@
 
 hl.config({
 	general = {
-		gaps_in = 8,
-		gaps_out = 100,
-		border_size = 1,
+		gaps_in = 10,
+		gaps_out = 50,
+		border_size = 2,
 
 		-- Default fallback borders (Overridden dynamically by current_theme/colors.lua)
 		col = {
@@ -22,7 +22,7 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 8,
+		rounding = 25,
 		rounding_power = 10,
 
 		active_opacity = 1.0,

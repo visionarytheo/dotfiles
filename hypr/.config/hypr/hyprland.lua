@@ -29,6 +29,3 @@ require("windows")
 -- Safely require colors.lua from ~/.config/hypr/current_theme
 package.path = CONFIG_DIR .. "/current_theme/?.lua;" .. package.path
 pcall(require, "colors")
-
--- HyprMod managed settings
-require("hyprland-gui")
